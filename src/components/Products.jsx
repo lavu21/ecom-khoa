@@ -23,7 +23,7 @@ const Products = () => {
   useEffect(() => {
     const getProducts = async () => {
       setLoading(true);
-      const response = await fetch("https://fakestoreapi.com/products/");
+      const response = await fetch("/products.json");
       if (componentMounted) {
         setData(await response.clone().json());
         setFilter(await response.json());
@@ -79,31 +79,25 @@ const Products = () => {
             className="btn btn-outline-dark btn-sm m-2"
             onClick={() => setFilter(data)}
           >
-            All
+            Tất cả
           </button>
           <button
             className="btn btn-outline-dark btn-sm m-2"
             onClick={() => filterProduct("men's clothing")}
           >
-            Men's Clothing
+            Thuê máy
           </button>
           <button
             className="btn btn-outline-dark btn-sm m-2"
             onClick={() => filterProduct("women's clothing")}
           >
-            Women's Clothing
+            Mua máy
           </button>
           <button
             className="btn btn-outline-dark btn-sm m-2"
             onClick={() => filterProduct("jewelery")}
           >
-            Jewelery
-          </button>
-          <button
-            className="btn btn-outline-dark btn-sm m-2"
-            onClick={() => filterProduct("electronics")}
-          >
-            Electronics
+            Phụ kiện
           </button>
         </div>
 
@@ -117,29 +111,27 @@ const Products = () => {
               <div className="card text-center h-100" key={product.id}>
                 <img
                   className="card-img-top p-3"
-                  src={product.image}
+                  src={product.img}
                   alt="Card"
                   height={300}
                 />
                 <div className="card-body">
                   <h5 className="card-title">
-                    {product.title.substring(0, 12)}...
+                    {product.name}...
                   </h5>
-                  <p className="card-text">
+                  {/* <p className="card-text">
                     {product.description.substring(0, 90)}...
-                  </p>
+                  </p> */}
                 </div>
                 <ul className="list-group list-group-flush">
-                  <li className="list-group-item lead">$ {product.price}</li>
-                  {/* <li className="list-group-item">Dapibus ac facilisis in</li>
-                    <li className="list-group-item">Vestibulum at eros</li> */}
+                  <li className="list-group-item lead">{parseInt(product.price).toLocaleString()} vnd</li>
                 </ul>
                 <div className="card-body">
                   <Link
                     to={"/product/" + product.id}
                     className="btn btn-dark m-1"
                   >
-                    Buy Now
+                    Mua ngay
                   </Link>
                   <button
                     className="btn btn-dark m-1"
@@ -148,7 +140,7 @@ const Products = () => {
                       addProduct(product);
                     }}
                   >
-                    Add to Cart
+                    Thêm vào giỏ
                   </button>
                 </div>
               </div>
@@ -161,12 +153,6 @@ const Products = () => {
   return (
     <>
       <div className="container my-3 py-3">
-        <div className="row">
-          <div className="col-12">
-            <h2 className="display-5 text-center">Latest Products</h2>
-            <hr />
-          </div>
-        </div>
         <div className="row justify-content-center">
           {loading ? <Loading /> : <ShowProducts />}
         </div>
